@@ -1,0 +1,143 @@
+﻿<Window x:Class="PicturesEditor.ModalDialogWindows.AsciiOptionsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PicturesEditor.ModalDialogWindows"
+        mc:Ignorable="d"
+        Title="ASCII Options"
+        Height="500"
+        Width="500"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="ToolWindow"
+        ShowInTaskbar="False"
+        FontSize="16"
+        Topmost="True">
+
+    <Window.DataContext>
+        <local:AsciiOptionsDialogVM />
+    </Window.DataContext>
+
+    <Grid Margin="50 25">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock TextAlignment="Center" TextWrapping="Wrap" FontSize="12" Opacity=".7">
+            <Run Text="ВНИМАНИЕ!" />
+            <LineBreak />
+            <Run Text="На размер полученного изображения из символов ASCII будут влиять настройки шрифта в той программе, где это изображение просматривается (размер шрифта, толщина, семейство)" />
+        </TextBlock>
+
+        <Grid Grid.Row="1"
+              Margin="25">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid.Resources>
+
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="VerticalContentAlignment"
+                            Value="Center" />
+                </Style>
+
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="VerticalContentAlignment"
+                            Value="Center" />
+                    <Setter Property="BorderThickness"
+                            Value="0 0 0 1" />
+                    <Setter Property="Margin"
+                            Value="10 10 50 10" />
+                    <Setter Property="Padding"
+                            Value="5 0 0 0" />
+                </Style>
+
+            </Grid.Resources>
+
+            <Label Content="Смещение по ширине:">
+                <Label.ToolTip>
+                    <TextBlock FontWeight="Bold"
+                               Text="Задаёт степень растяжения/сжатия изображения" />
+                </Label.ToolTip>
+            </Label>
+            <TextBox Grid.Column="1"
+                     Text="{Binding WidthOffset}" />
+
+            <Label Grid.Row="1"
+                   Content="Максимальная ширина:">
+                <Label.ToolTip>
+                    <TextBlock>
+                        <Run FontWeight="Bold"
+                             Text="Влияет на размер изображения" />
+                        <LineBreak />
+                        <Run Text="При высоком значении рекомендуется уменьшить размер шрифта при просмотре изображения" />
+                    </TextBlock>
+                </Label.ToolTip>
+            </Label>
+            <TextBox Grid.Column="1"
+                     Grid.Row="1"
+                     Text="{Binding MaxWidth}" />
+
+            <Label Grid.Row="2"
+                   Content="Высокое качество:">
+                <Label.ToolTip>
+                    <TextBlock>
+                        <Run FontWeight="Bold"
+                             Text="Использовать высокое качество изображения" />
+                        <LineBreak />
+                        <Run Text="Если включен, то рекомендуется увеличить максимальную ширину изображения" />
+                    </TextBlock>
+                </Label.ToolTip>
+            </Label>
+            <CheckBox Grid.Row="2"
+                      Grid.Column="2"
+                      VerticalContentAlignment="Center"
+                      Margin="10 20"
+                      Padding="5 0 0 0"
+                      IsChecked="{Binding HighQuality}" />
+
+            <Label Grid.Row="3"
+                   Content="От яркого к тусклому:">
+                <Label.ToolTip>
+                    <TextBlock>
+                        <Run FontWeight="Bold"
+                             Text="Использовать символы от ярких к тусклым" />
+                        <LineBreak />
+                        <Run Text="Если включен, то символы будут более читабельны на светлом фоне, иначе — на тёмном" />
+                    </TextBlock>
+                </Label.ToolTip>
+            </Label>
+            <CheckBox Grid.Row="3"
+                      Grid.Column="2"
+                      VerticalContentAlignment="Center"
+                      Margin="10 20"
+                      Padding="5 0 0 0"
+                      IsChecked="{Binding FromBrightToDim}" />
+
+        </Grid>
+
+        <Button Grid.Row="2"
+                Padding="0 10"
+                MaxWidth="300"
+                Click="Button_Click"
+                Command="{Binding ApplyCommand}">
+
+            <TextBlock Text="Применить"
+                       TextWrapping="Wrap"
+                       FontWeight="Bold"
+                       Cursor="Hand" />
+        </Button>
+    </Grid>
+</Window>

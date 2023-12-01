@@ -1,0 +1,19 @@
+﻿<Application x:Class="PicturesEditor.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dialog="clr-namespace:PicturesEditor.ModalDialogWindows"
+             StartupUri="MainWindow.xaml">
+    
+    <Application.Resources>
+        <ResourceDictionary>
+            
+            <dialog:AsciiOptionsDialog x:Key="{x:Type dialog:AsciiOptionsDialogVM}"
+                                       x:Shared="False" />
+
+            <DataTemplate DataType="{x:Type dialog:AsciiOptionsDialogVM}">
+                <dialog:AsciiOptionsDialog />
+            </DataTemplate>
+            
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

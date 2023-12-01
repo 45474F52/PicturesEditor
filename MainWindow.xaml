@@ -1,0 +1,122 @@
+﻿<Window x:Class="PicturesEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PicturesEditor"
+        xmlns:dnd="clr-namespace:PicturesEditor.Core.DragnDrop"
+        xmlns:core="clr-namespace:PicturesEditor.Core"
+        mc:Ignorable="d"
+        Title="Pictures Editor"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        WindowState="Maximized"
+        Height="450"
+        Width="800"
+        FontSize="16"
+        core:ModalDialogWindowBehaviour.ModalDialogWindow="{Binding ModalDialog}">
+
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".25*" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Vertical">
+
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Cursor"
+                                Value="Hand" />
+                        <Setter Property="Margin"
+                                Value="0 0 0 5" />
+                    </Style>
+                    <Style TargetType="{x:Type Expander}">
+                        <Setter Property="Cursor"
+                                Value="Hand" />
+                        <Setter Property="Margin"
+                                Value="5" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <Expander Header="Изображение">
+                    <StackPanel Orientation="Vertical">
+                        <Button Command="{Binding LoadImageCommand}">
+                            <TextBlock Text="Выбрать изображение"
+                                       TextWrapping="Wrap"
+                                       TextAlignment="Center" />
+                        </Button>
+
+                        <Button Command="{Binding ResetFiltersCommand}">
+                            <TextBlock Text="Очистить все фильтры"
+                                       TextWrapping="Wrap"
+                                       TextAlignment="Center" />
+                        </Button>
+
+                        <Button Command="{Binding DeleteImageCommand}">
+                            <TextBlock Text="Удалить изображение"
+                                       TextWrapping="Wrap"
+                                       TextAlignment="Center" />
+                        </Button>
+
+                        <Button Command="{Binding SaveImageCommand}">
+                            <TextBlock Text="Сохранить изображение"
+                                       TextWrapping="Wrap"
+                                       TextAlignment="Center" />
+                        </Button>
+                    </StackPanel>
+                </Expander>
+
+                <Expander Header="Фильтры">
+                    <StackPanel Orientation="Vertical">
+                        <Button Command="{Binding ApplyGrayScaleCommand}">
+                            <TextBlock Text="Оттенки серого"
+                                       TextWrapping="Wrap"
+                                       TextAlignment="Center" />
+                        </Button>
+
+                        <Button Command="{Binding InvertColorsCommand}">
+                            <TextBlock Text="Инвертировать цвета"
+                                       TextWrapping="Wrap"
+                                       TextAlignment="Center" />
+                        </Button>
+                    </StackPanel>
+                </Expander>
+
+                <Expander Header="Конвертация">
+                    <Button Command="{Binding ConvertToAsciiCommand}">
+                        <TextBlock Text="Конвертировать в ASCII"
+                                   TextWrapping="Wrap"
+                                   TextAlignment="Center" />
+                    </Button>
+                </Expander>
+            </StackPanel>
+
+            <Button Grid.Row="1"
+                    Visibility="Collapsed"
+                    Content="Настройки"
+                    Cursor="Hand"
+                    Padding="0 10"
+                    FontWeight="Bold"
+                    Command="{Binding SettingCommand}" />
+        </Grid>
+
+        <Border Grid.Column="1"
+                dnd:DragnDropHelper.IsEnabled="True"
+                dnd:DragnDropHelper.Target="{Binding}"
+                Background="Transparent">
+
+            <Image Source="{Binding Image, Mode=OneWay}" />
+        </Border>
+    </Grid>
+</Window>
